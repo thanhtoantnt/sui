@@ -103,8 +103,8 @@ pub enum GlobalDataStatus {
 /// A Move reference pointing to an element in a container.
 #[derive(Debug)]
 pub struct IndexedRef {
-    idx: usize,
-    container_ref: ContainerRef,
+    pub idx: usize,
+    pub container_ref: ContainerRef,
 }
 
 /// An umbrella enum for references. It is used to hide the internals of the public type
