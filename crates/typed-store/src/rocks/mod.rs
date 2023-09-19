@@ -790,8 +790,8 @@ impl<K, V> DBMap<K, V> {
     }
 
     pub fn compact_range<J: Serialize>(&self, start: &J, end: &J) -> Result<(), TypedStoreError> {
-        let from_buf = be_fix_int_ser(start.borrow())?;
-        let to_buf = be_fix_int_ser(end.borrow())?;
+        let from_buf = be_fix_int_ser(start)?;
+        let to_buf = be_fix_int_ser(end)?;
         self.rocksdb
             .compact_range_cf(&self.cf(), Some(from_buf), Some(to_buf));
         Ok(())
@@ -816,8 +816,8 @@ impl<K, V> DBMap<K, V> {
         start: &J,
         end: &J,
     ) -> Result<(), TypedStoreError> {
-        let from_buf = be_fix_int_ser(start.borrow())?;
-        let to_buf = be_fix_int_ser(end.borrow())?;
+        let from_buf = be_fix_int_ser(start)?;
+        let to_buf = be_fix_int_ser(end)?;
         self.rocksdb
             .compact_range_to_bottom(&self.cf(), Some(from_buf), Some(to_buf));
         Ok(())
@@ -1394,7 +1394,7 @@ impl<'a> DBTransaction<'a> {
         if !Arc::ptr_eq(&db.rocksdb, &self.rocksdb) {
             return Err(TypedStoreError::CrossDBBatch);
         }
-        let k_buf = be_fix_int_ser(key.borrow())?;
+        let k_buf = be_fix_int_ser(key)?;
         match self
             .transaction
             .get_for_update_cf_opt(&db.cf(), k_buf, true, &db.opts.readopts())?

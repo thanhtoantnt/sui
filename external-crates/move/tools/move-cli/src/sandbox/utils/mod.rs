@@ -42,7 +42,7 @@ pub mod package_context;
 
 use move_bytecode_utils::module_cache::GetModule;
 use move_vm_test_utils::gas_schedule::{CostTable, GasStatus};
-pub use on_disk_state_view::*;
+// pub use on_disk_state_view::*;
 pub use package_context::*;
 
 pub fn get_gas_status(cost_table: &CostTable, gas_budget: Option<u64>) -> Result<GasStatus> {
